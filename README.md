@@ -45,9 +45,9 @@ Before utilizing SenseXAMP, it's important to prepare the datasets appropriately
   1. Download from  [here.](https://drive.google.com/drive/folders/1L0OKKq3yQmKQTyFSQ3YUmB5RRnba10w1?usp=sharing)
   2. By running the script  `tools/stc_gen.py` (Must get `stc_csv` version first)
   
-#### stc_csv 
+#### stc_datasets 
 - Format: **.csv**
-- Description: These datasets are in .h5 format and are obtained by calculating protein descriptors based on the sequences. This version of the dataset is derived from the `ori_datasets`.
+- Description: These datasets are in .h5 format and are obtained by calculating protein descriptors based on the sequences.  Also includes `train.csv`, `val.csv`, and `test.csv`. This version of the dataset is derived from the `ori_datasets`.
 - Obtaining Method: By running the script: `tools/generate_csv.py`
   
 **Note:** The "stc_csv" dataset version is primarily intended for comparative methods like SMEP and is not necessary for using SenseXAMP.
@@ -63,56 +63,14 @@ Before utilizing SenseXAMP, it's important to prepare the datasets appropriately
 Download our model checkpoints from [here.](https://drive.google.com/drive/folders/1wNuoFrFZd3q3AlGyV-s2WpaVMs06N4L1?usp=sharing)
 
 ## 3. Generate esm-1b embeddings using our scripts.
+It is recommended to refer to the project structure we provide to place all versions of datasets.
+
 Here is an example for generating esm-1b embeddings for the `ori_datasets` version of AMPlify dataset.
 
 ```bash
 python tools/esm_emb_gen.py --dataset_dir ./datasets/ori_datasets/AMPlify --fname AMPlify.h5
 ```
 After running this command, an `AMPlify.h5` file will be generated in the `datasets/esm_embeddings/all` directory.
-
-<!-- ## Project structure
-### Overview of project structure
-- SenseXAMP
-  - **Ampmm_base**
-    - data
-    - models
-    - runner
-    - utils
-  - **configs**
-  - **datasets**
-  - **tools**
-    - cd_hit
-    - esm_project
-    - strcture_data_generation
-    - xxx.py
-  - **utils**
-    - xxx.py
-  - **experiments**
-  - **train.py**: 
-
-### 1. Ampmm_base
-The implementation of the core class, "Trainer," in our code repository.
-
-### 2. configs
-**configs**
-
-- cls_task
-  - xxx.py
-- reg_task
-  - xxx.py
-  
-This directory stores various configuration files that play a crucial role in managing our codebase. It encompasses model parameters, dataset settings, and hyperparameter configurations, all conveniently organized within config files. 
-
-The naming convention for these config files adheres to the following structure: `datasetname_modelname.py`. For instance, the file `benchmark_imbalanced_fusion.py` signifies the SenseXAMP model's application on our classification imbalanced dataset.
-
-### 3. datasets
-This directory serves as a repository for various forms of datasets.
-- **datasets**
-  - ori_datasets
-  - stc_datasets
-  - stc_info
-  - esm_embeddings -->
-
 
 ## 4. Run SenseXAMP
 In this project, the model, dataset, and hyperparameters are all setted in `config.py`. Therefore, before running `run.py`, please ensure that the corresponding `config.py` is correctly configured.
@@ -123,5 +81,37 @@ To be continue
 To be continue
 
 
-
-
+## Project structure
+The core project framework of SenseXAMP is outlined below.  It is recommended to refer to this project structure when organizing all files.
+```bash
+SenseXAMP/
+├── Ampmm_base/  : Core implementaion of trainer, including models, loss, dataloader, etc.
+│   ├── data/
+│   ├── models/
+│   ├── runner/
+│   └── utils/
+├── configs/     :  This folder contains various configs for different experiments, you can also write your own configs.
+│   ├── cls_task/
+│   │   ├── benchmark_imblanced_SenseXAMP.py
+│   │   ├── benchmark_blanced_SenseXAMP.py
+│   │   ├── ...
+│   │   └── Your_own_config.py
+│   └── reg_task/
+│   │   ├── ecoli_SenseXAMP.py
+│   │   ├── saureus_SenseXAMP.py
+│   │   ├── ...
+│   │   └── Your_own_config.py
+├── datasets/     :  This folder contains different version of datasets
+│   ├── ori_datasets/ : 'ori_datasets' version
+│   │   ├── cls_benchmark_imbalanced/
+│   │   ├── cls_benchmark_balanced/
+│   │   ├── ...
+│   │   └── AMPlify/
+│   ├── stc_datasets/   : 'stc_datasets' version, same structure as 'ori_datasets'
+│   ├── esm_embeddings/ : 'esm_embeddings' version
+│   ├── stc_info/       : 'stc_info' version
+├── experiments/ :  This folder contains experiments results. (including model checkpoints auto saved)
+├── tools/       :  This folder contains useful scripts such as  generation of different version of datasets.
+├── utils/       :  This folder contains necessary codes for the implementation of Ampmm_base
+├── requirements.txt
+└── run.py 
