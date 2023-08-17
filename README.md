@@ -73,18 +73,45 @@ python tools/esm_emb_gen.py --dataset_dir ./datasets/ori_datasets/AMPlify --fnam
 After running this command, an `AMPlify.h5` file will be generated in the `datasets/esm_embeddings/all` directory.
 
 ## 4. Run SenseXAMP
-In this project, the model, dataset, and hyperparameters are all setted in `config.py`. Therefore, before running `run.py`, please ensure that the corresponding `config.py` is correctly configured.
+In this project, the model, datasets, and hyperparameters are all setted in `config.py`. Therefore, before running `run.py`, please ensure that the corresponding `config.py` is correctly configured.
 
-### Train SenseXAMP
+### 4.1 Some introduction about configs we provided
+We have provided configs for the main experiments in the paper, which can be referenced.
+The configs we provide are named according to the following rules:
+`DATASET_ MODEL.py`
+
+The following is an explanation of the specific words that appear in our config:
+
+**About datasets:**
+
+- **ecoli:** Our proposed E.coli regression dataset.
+- **saureus:** Our proposed S.aureus regression dataset.
+- **benchmark_balanced:** Our balanced classification dataset.
+- **benchmark_imbalanced:** Our imbalanced classification dataset.
+- **AMPlify:** The AMPlify dataset.
+- **AmPEP:** The DeepAmpep-30 dataset.
+
+**About models:**
+
+- **fcn:** The model-PD branch of SenseXAMP, utilizing structured data exclusively. Refer to the paper for detailed information.
+- **onlyslfattn:** The model-EB branch of SenseXAMP, exclusively using embeddings from esm-1b. Detailed information is available in the paper.
+- **SenseXAMP:** The comprehensive SenseXAMP model.
+
+
+### 4.2 Train SenseXAMP
+For example, train SenseXAMP on our proposed balanced classification datasets.
+
 ```python
 CUDA_VISIBLE_DEVICES=0 python -m torch.distributed.launch --nproc_per_node 1 run.py \
 --config ./configs/cls_task/benchmark_balanced_SenseXAMP.py --mode train
 ```
 
-### Evaluate with SenseXAMP on the test set.
+### 4.3 Evaluate with SenseXAMP on the test set.
+For example, evaluate with SenseXAMP on the test set of our proposed balanced classification datasets.
+(Make sure you have modified `ckpt_path` to checkpoint in the config file.)
 ```python
 CUDA_VISIBLE_DEVICES=0 python -m torch.distributed.launch --nproc_per_node 1 run.py \
---config ./configs/cls_task/benchmark_balanced_SenseXAMP.py --mode train
+--config ./configs/cls_task/benchmark_balanced_SenseXAMP.py --mode test
 ```
 
 
