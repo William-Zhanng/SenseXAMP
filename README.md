@@ -63,7 +63,7 @@ Before utilizing SenseXAMP, it's important to prepare the datasets appropriately
 Download our model checkpoints from [here.](https://drive.google.com/drive/folders/1wNuoFrFZd3q3AlGyV-s2WpaVMs06N4L1?usp=sharing)
 
 ## 3. Generate esm-1b embeddings using our scripts.
-It is recommended to refer to the project structure we provide to place all versions of datasets.
+It is recommended to refer to the [project structure](# project-structure) we provide to place all versions of datasets.
 
 Here is an example for generating esm-1b embeddings for the `ori_datasets` version of AMPlify dataset.
 
