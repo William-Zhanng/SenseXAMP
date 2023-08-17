@@ -62,14 +62,12 @@ Before utilizing SenseXAMP, it's important to prepare the datasets appropriately
 ## 2. Download our model checkpoints to quickly reproduce our results
 Download our model checkpoints from [here.](https://drive.google.com/drive/folders/1wNuoFrFZd3q3AlGyV-s2WpaVMs06N4L1?usp=sharing)
 
-## 3: Generate esm-1b embeddings using our scripts.
+## 3. Generate esm-1b embeddings using our scripts.
 Here is an example for generating esm-1b embeddings for the `ori_datasets` version of AMPlify dataset.
 
 ```bash
 python tools/esm_emb_gen.py --dataset_dir ./datasets/ori_datasets/AMPlify --fname AMPlify.h5
 ```
-#
-
 After running this command, an `AMPlify.h5` file will be generated in the `datasets/esm_embeddings/all` directory.
 
 <!-- ## Project structure
@@ -116,7 +114,9 @@ This directory serves as a repository for various forms of datasets.
   - esm_embeddings -->
 
 
-## Run SenseXAMP
+## 4. Run SenseXAMP
+In this project, the model, dataset, and hyperparameters are all setted in `config.py`. Therefore, before running `run.py`, please ensure that the corresponding `config.py` is correctly configured.
+
 ### Evaluate with SenseXAMP on the test set.
 To be continue
 ### Train SenseXAMP
