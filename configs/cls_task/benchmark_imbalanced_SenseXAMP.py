@@ -1,9 +1,9 @@
 import os
 import torch
 # Task of the model 
-# Including 'amp_cls', 'amp_multilabel_cls', 'amp_ranking', and 'amp_regression',default 'amp_cls'
+# Including 'amp_cls', 'amp_multilabel_cls', 'amp_ranking', and 'amp_regression', default 'amp_cls'
 benchmark_name = 'amp_cls'
-dataset_name = 'cls_benchmark_balanced'
+dataset_name = 'cls_benchmark_imbalanced'
 work_dir = 'experiments'
 # Training hyper-params settings
 epochs = 80
@@ -42,7 +42,7 @@ model = dict(
     )
 )
 # Dataset settings
-data_root = './datasets/ori_datasets/cls_benchmark_balanced'
+data_root = './datasets/ori_datasets/cls_benchmark_imbalanced'
 data = dict(
     train=dict(
         datafile=os.path.join(data_root,'train.csv'),

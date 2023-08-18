@@ -37,7 +37,7 @@ Before utilizing SenseXAMP, it's important to prepare the datasets appropriately
 - Format: **.h5**
 - Description: These datasets are in .h5 format and are generated using the esm-1b model. This version of the dataset is derived from the `ori_datasets`.
 - Obtaining Method: By running the script `tools/esm_emb_gen.py` (Since embeddings files are too large)
-
+  
 #### stc_info
 - Format: **.h5**
 - Description: These datasets are in .h5 format and are obtained by calculating protein descriptors based on the sequences. This version of the dataset is derived from the `ori_datasets`.
@@ -72,6 +72,8 @@ python tools/esm_emb_gen.py --dataset_dir ./datasets/ori_datasets/AMPlify --fnam
 ```
 After running this command, an `AMPlify.h5` file will be generated in the `datasets/esm_embeddings/all` directory.
 
+**Tips:** Since our proposed balanced cls(classification) datasets is a subset of imbalanced cls datasets, if you generate embeddings for `ori_datasets/cls_benchmark_imbalanced/` using this script,the generated `cls_benchmark.h5` can be used for experiments of both **balanced cls datasets and imbalanced cls datasets**. 
+
 ## 4. Run SenseXAMP
 In this project, the model, datasets, and hyperparameters are all setted in `config.py`. Therefore, before running `run.py`, please ensure that the corresponding `config.py` is correctly configured.
 
@@ -80,7 +82,7 @@ We have provided configs for the main experiments in the paper, which can be ref
 The configs we provide are named according to the following rules:
 `DATASET_ MODEL.py`
 
-The following is an explanation of the specific words that appear in our config:
+The following is an explanation of the specific words that appear in the name of our provided configs:
 
 **About datasets:**
 

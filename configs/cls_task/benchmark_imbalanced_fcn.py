@@ -3,11 +3,11 @@ import torch
 # Task of the model 
 # Including 'amp_cls', 'amp_multilabel_cls', 'amp_ranking', and 'amp_regression',default 'amp_cls'
 benchmark_name = 'amp_cls'
-dataset_name = 'cls_benchmark_balanced'
+dataset_name = 'cls_benchmark_imbalanced'
 work_dir = 'experiments'
 # Training hyper-params settings
 epochs = 80
-lr = 1e-5
+lr = 1e-3
 eps = 1e-8
 batch_interval = 100 # every n batch output loss info
 optimizer = dict(type='Adam', lr=lr, eps=eps)
@@ -15,34 +15,23 @@ optimizer_config = dict(
     grad_clip=dict(max_norm=1.0)
     )
 model = dict(
-    name = 'MultiModalFusionModel',
+    name = 'BaseStcClsModel',
     kwargs = dict(
         stc_size=676, 
         emb_size=1280, 
-        d_inner=2048, 
-        n_slf_layers=2, 
-        n_cross_layers=1, 
-        n_head=4, 
-        d_k=1280, 
-        d_v=1280, 
-        dropout=0.2
+        n_classes=1
     ),
     losses = dict(
-        Ensemble_BCELoss=dict(
-            weight=1.0,
+        BCEWithLogitsLoss=dict(
+            weight=1.0, # weight of losses
             kwargs=dict(
-                pos_weight=[1.0],
-                loss_weight=dict(
-                    stc_pred=0.25,
-                    slf_pred=0.25,
-                    final_pred=0.5,
-                )
+                pos_weight=torch.tensor([1.0]).cuda()
             )
         )
     )
 )
 # Dataset settings
-data_root = './datasets/ori_datasets/cls_benchmark_balanced'
+data_root = './datasets/ori_datasets/cls_benchmark_imbalanced'
 data = dict(
     train=dict(
         datafile=os.path.join(data_root,'train.csv'),
@@ -66,3 +55,4 @@ data = dict(
 # Resume & Checkpoint setting
 Resume = None # Resume from which ckpt to train
 ckpt_path = None # Checkpoint for test
+
